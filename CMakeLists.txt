@@ -45,13 +45,13 @@ macro(copy_dll_if_not_exist SRC DST)
 endmacro()
 
 download_extract(
-    https://www.nuget.org/api/v2/package/Microsoft.Direct3D.D3D12/1.610.4
+    https://www.nuget.org/api/v2/package/Microsoft.Direct3D.D3D12/1.618.2
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty
-    d3d12_agility_1.610.4
+    d3d12_agility_1.618.2
 )
 
 copy_dll_if_not_exist(
-    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/d3d12_agility_1.610.4/build/native/bin/x64/
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/d3d12_agility_1.618.2/build/native/bin/x64/
     D3D12
 )
 
@@ -68,5 +68,15 @@ target_link_libraries(
     dxgi.lib)
 target_include_directories(
     repro_01 PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/d3d12_agility_1.610.4/build/native/include)
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/d3d12_agility_1.618.2/build/native/include)
 set_target_properties(repro_01 PROPERTIES CXX_STANDARD 20)
+
+add_executable(repro_02 ${CMAKE_CURRENT_SOURCE_DIR}/repro_02/main.cpp)
+target_link_libraries(
+    repro_02 PUBLIC
+    d3d12.lib
+    dxgi.lib)
+target_include_directories(
+    repro_02 PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/d3d12_agility_1.618.2/build/native/include)
+set_target_properties(repro_02 PROPERTIES CXX_STANDARD 20)
